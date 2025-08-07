@@ -804,7 +804,10 @@ function App() {
               <path d="M16.5 3C16.7761 3 17 3.22386 17 3.5V16.5L16.9902 16.6006C16.9437 16.8286 16.7417 17 16.5 17C16.2583 17 16.0563 16.8286 16.0098 16.6006L16 16.5V3.5C16 3.22386 16.2239 3 16.5 3ZM8.12793 5.16504C8.28958 4.98547 8.5524 4.95058 8.75293 5.06836L8.83496 5.12793L13.835 9.62793C13.9403 9.72275 14 9.85828 14 10C14 10.1063 13.9667 10.2093 13.9053 10.2939L13.835 10.3721L8.83496 14.8721C8.62972 15.0568 8.31267 15.0402 8.12793 14.835C7.94322 14.6297 7.95984 14.3127 8.16504 14.1279L12.1963 10.5H3.5C3.22386 10.5 3 10.2761 3 10C3 9.72386 3.22386 9.5 3.5 9.5H12.1963L8.16504 5.87207L8.09766 5.79688C7.95931 5.60979 7.96622 5.34471 8.12793 5.16504Z"></path>
             </svg>
           </button>
-          <div className="text-[#d7dce2] text-sm font-medium">Lalit Sharma</div>
+          <div className="text-[#d7dce2] text-sm font-medium">
+            <span className="sm:hidden">{(resume?.basics?.name ?? 'Lalit Sharma').trim().split(/\s+/)[0]}</span>
+            <span className="hidden sm:inline">{resume?.basics?.name ?? 'Lalit Sharma'}</span>
+          </div>
         </div>
         <div className="w-full max-w-lg justify-self-center relative">
           <div className="flex items-center gap-2 bg-[#2f3b54] rounded px-2 py-1 focus-within:ring-1 focus-within:ring-[#ffcc66]/70">
@@ -861,7 +864,7 @@ function App() {
 
       <div className="flex-1 flex" ref={contentRef}>
         {!sidebarCollapsed && (
-          <aside className="w-64 border-r border-[#2f3b54] bg-[#171c28]">
+          <aside className="w-36 sm:w-48 md:w-56 lg:w-64 border-r border-[#2f3b54] bg-[#171c28]">
             <div className="px-3 py-2 text-xs uppercase tracking-wide text-[#8695b7]">Explorer</div>
             <ul className="px-2 pb-4 space-y-1">
               {SECTIONS.map((s) => (
@@ -874,7 +877,7 @@ function App() {
                     }
                   >
                     <FileIcon filePath={s.filePath} className="shrink-0" size={18} />
-                    <span className={leftActiveTabId === s.id || rightActiveTabId === s.id ? 'text-[#d7dce2]' : 'text-[#a2aabc]'}>{s.filePath}</span>
+                    <span className={(leftActiveTabId === s.id || rightActiveTabId === s.id ? 'text-[#d7dce2]' : 'text-[#a2aabc]') + ' truncate max-w-[9rem] sm:max-w-[11rem] md:max-w-[13rem]'}>{s.filePath}</span>
                   </button>
                 </li>
               ))}
