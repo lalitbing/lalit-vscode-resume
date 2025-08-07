@@ -1,0 +1,18 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f3b54" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#2f3b54" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Halcyon dark rounded square with subtle border -->
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="#1d2433" stroke="#2f3b54" stroke-width="2"/>
+  <!-- Subtle top sheen -->
+  <rect x="4" y="4" width="56" height="20" rx="12" fill="url(#top)"/>
+  <!-- Code chevrons -->
+  <path d="M28 22 L18 32 L28 42" stroke="#ffcc66" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36 22 L46 32 L36 42" stroke="#5ccfe6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center dot hint -->
+  <circle cx="32" cy="32" r="1.8" fill="#d7dce2"/>
+</svg>
+

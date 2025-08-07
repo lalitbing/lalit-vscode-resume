@@ -1,0 +1,151 @@
+{
+  "basics": {
+    "name": "Lalit Sharma",
+    "label": "Software Engineer",
+    "summary": "Detail-oriented, organized and meticulous person. Works at a fast pace to meet tight deadlines. Enthusiastic team player ready to contribute to company success by achieving targets.",
+    "location": {
+      "country": "IN"
+    },
+    "profiles": [
+      { "network": "Email", "username": "lalitdev9013", "url": "mailto:lalitdev9013@gmail.com" },
+      { "network": "Phone", "username": "+918130417929" },
+      { "network": "LinkedIn", "username": "lalitbing", "url": "https://linkedin.com/in/lalitbing" },
+      { "network": "GitHub", "username": "lalitbing", "url": "https://github.com/lalitbing" }
+    ]
+  },
+  "skills": [
+    { "name": "Web", "keywords": ["HTML", "CSS", "JavaScript", "TypeScript", "TailwindCSS"] },
+    { "name": "Frontend", "keywords": ["React JS", "StencilJS", "Redux", "Hooks", "Routers"] },
+    { "name": "Backend", "keywords": ["Node.js"] },
+    { "name": "Core", "keywords": ["Data Structures", "OOPs"] },
+    { "name": "Languages", "keywords": ["Java", "C/C++"] },
+    { "name": "Cloud", "keywords": ["AWS"] }
+  ],
+  "work": [
+    {
+      "name": "Magic EdTech",
+      "position": "Software Engineer",
+      "startDate": "2022-07",
+      "endDate": null,
+      "highlights": [
+        "Led team to migrate old UI to a modern React app, achieving ~75% performance improvement",
+        "Created and implemented Micro-Frontend Architecture",
+        "Built complex applications using ReactJS, TypeScript and StencilJS",
+        "Integrated industry-standard authentication with live validation and encryption; used OAuth 2.0 for SocialSignOn",
+        "Built reusable web components in StencilJS; maintained a component library in Storybook across platforms",
+        "Implemented TailwindCSS styling and WCAG-compliant accessibility",
+        "Implemented responsive design and UI test cases across browsers",
+        "Collaborated with Backend and UI/UX teams to deliver features"
+      ]
+    },
+    {
+      "name": "Wipro Limited",
+      "position": "Project Engineer",
+      "startDate": "2021-03",
+      "endDate": "2022-06",
+      "highlights": [
+        "Delivered user-facing features using React JS and reusable components",
+        "Built reusable web methods/solutions used across business domains",
+        "Designed and developed responsive pages using HTML5, CSS3, JavaScript and ReactJS based on W3C standards",
+        "Managed internal firewall; provisioned/denied access to servers and applications",
+        "Completed client incidents/requests under SLA"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Comfy Sloth",
+      "year": 2022,
+      "summary": "E-commerce store replica with product filters, categories, and deep React integration",
+      "technologies": ["React"],
+      "url": null
+    },
+    {
+      "name": "Backroads",
+      "year": 2021,
+      "summary": "Responsive travel website using HTML, CSS and Vanilla JS",
+      "technologies": ["HTML", "CSS", "JavaScript"],
+      "url": null
+    },
+    {
+      "name": "Static Website Hosting & Cross Account Access",
+      "year": 2019,
+      "summary": "Hosted website on AWS and enabled access to resources from another AWS account",
+      "technologies": ["AWS"],
+      "url": null
+    },
+    {
+      "name": "Floppy Dude",
+      "year": 2018,
+      "summary": "Game developed from scratch using Java; inspired by the flappy bird game",
+      "technologies": ["Java"],
+      "url": null
+    },
+    {
+      "name": "Box Moving Mechanism",
+      "year": 2017,
+      "summary": "Final year Mechanical Engineering project representing motion from one place to another",
+      "technologies": [],
+      "url": null
+    }
+  ],
+  "education": [
+    {
+      "institution": "Ajay Kumar Garg Engineering College",
+      "studyType": "Bachelor of Technology",
+      "area": "Computer Science",
+      "startDate": "2017-08",
+      "endDate": "2020-08",
+      "score": "69%"
+    },
+    {
+      "institution": "Aryabhat Institute Of Technology",
+      "studyType": "Diploma",
+      "area": "Mechanical Engineering",
+      "startDate": "2014-08",
+      "endDate": "2017-05",
+      "score": "64%"
+    },
+    {
+      "institution": "Army Public School Dhaula Kuan",
+      "studyType": "Secondary",
+      "area": "Class X",
+      "startDate": "2013-04",
+      "endDate": "2014-03",
+      "score": "CGPA 7.8"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Full Stack Web Development Course — MERN Stack",
+      "issuer": "Coding Ninjas",
+      "date": "2023-07"
+    },
+    {
+      "name": "JavaScript, HTML & CSS",
+      "issuer": "Udemy",
+      "date": "2020-01"
+    },
+    {
+      "name": "Amazon Web Services",
+      "issuer": "Udemy",
+      "date": "2019-01"
+    },
+    {
+      "name": "Core Java",
+      "issuer": "CodeKamp",
+      "date": "2018-01"
+    },
+    {
+      "name": "C and C++ Programming",
+      "issuer": "Aptech",
+      "date": "2017-01"
+    }
+  ],
+  "interests": ["Reading", "Game-Modding", "Tech Enthusiast"],
+  "meta": {
+    "source": "RESUME.md",
+    "schema": "custom.resume.v1",
+    "generatedAt": "${new Date().toISOString()}"
+  }
+}
