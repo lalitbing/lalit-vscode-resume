@@ -68,6 +68,7 @@ function App() {
   const [rightActiveTabId, setRightActiveTabId] = useState<SectionId | null>(null);
   const [query, setQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   type ContextMenuState = null | {
     x: number;
@@ -212,13 +213,11 @@ function App() {
         <div
           className="rounded-lg shadow-2xl py-1"
           style={{
-            background:
-              'linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 100%)',
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 100%)',
             backdropFilter: 'blur(14px) saturate(140%)',
             WebkitBackdropFilter: 'blur(14px) saturate(140%)',
             border: '1px solid rgba(255,255,255,0.18)',
-            boxShadow:
-              '0 10px 30px rgba(0,0,0,0.45), inset 0 1px rgba(255,255,255,0.08), 0 0 0 0.5px rgba(255,255,255,0.06)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.45), inset 0 1px rgba(255,255,255,0.08), 0 0 0 0.5px rgba(255,255,255,0.06)',
             width: 160,
           }}
         >
@@ -556,7 +555,7 @@ function App() {
       const next = prev.filter((t) => t.id !== tabId);
       if (activeId === tabId) {
         const fallback = next[idx - 1] || next[idx] || undefined;
-        setActive(fallback ? fallback.id : (group === 'left' ? 'home' : (next[0]?.id ?? null)) as any);
+        setActive(fallback ? fallback.id : ((group === 'left' ? 'home' : next[0]?.id ?? null) as any));
         if (!fallback) {
           return group === 'left' ? [{ id: 'home', title: 'Home' }] : [];
         }
@@ -774,9 +773,39 @@ function App() {
 
   return (
     <div className="h-full bg-[#171c28] text-[#d7dce2] font-[system-ui] flex flex-col">
-      {/* Top bar with Command Palette like search (Halcyon) */}
       <div className="h-10 border-b border-[#2f3b54] grid grid-cols-[1fr_auto_1fr] items-center px-3 gap-3 bg-[#171c28]">
-        <div className="text-[#d7dce2] text-sm font-medium">Lalit Sharma</div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setSidebarCollapsed((v) => !v)}
+            aria-label="Toggle Explorer"
+            className="group h-7 w-7 grid place-items-center rounded bg-transparent hover:bg-[#2f3b54] transition-colors"
+          >
+            <svg
+              className="row-start-1 col-start-1 transition-opacity duration-150 opacity-100 group-hover:opacity-0 text-[#d7dce2]"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden
+            >
+              <rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              <path d="M9 5v14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+            <svg
+              className={`row-start-1 col-start-1 transition-opacity duration-150 opacity-0 group-hover:opacity-100 text-[#d7dce2] ${
+                sidebarCollapsed ? '' : '-scale-x-100'
+              }`}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path d="M16.5 3C16.7761 3 17 3.22386 17 3.5V16.5L16.9902 16.6006C16.9437 16.8286 16.7417 17 16.5 17C16.2583 17 16.0563 16.8286 16.0098 16.6006L16 16.5V3.5C16 3.22386 16.2239 3 16.5 3ZM8.12793 5.16504C8.28958 4.98547 8.5524 4.95058 8.75293 5.06836L8.83496 5.12793L13.835 9.62793C13.9403 9.72275 14 9.85828 14 10C14 10.1063 13.9667 10.2093 13.9053 10.2939L13.835 10.3721L8.83496 14.8721C8.62972 15.0568 8.31267 15.0402 8.12793 14.835C7.94322 14.6297 7.95984 14.3127 8.16504 14.1279L12.1963 10.5H3.5C3.22386 10.5 3 10.2761 3 10C3 9.72386 3.22386 9.5 3.5 9.5H12.1963L8.16504 5.87207L8.09766 5.79688C7.95931 5.60979 7.96622 5.34471 8.12793 5.16504Z"></path>
+            </svg>
+          </button>
+          <div className="text-[#d7dce2] text-sm font-medium">Lalit Sharma</div>
+        </div>
         <div className="w-full max-w-lg justify-self-center relative">
           <div className="flex items-center gap-2 bg-[#2f3b54] rounded px-2 py-1 focus-within:ring-1 focus-within:ring-[#ffcc66]/70">
             <span className="text-[#8695b7] text-xs">⌘K</span>
@@ -830,78 +859,75 @@ function App() {
         <div />
       </div>
 
-      {/* Main layout */}
       <div className="flex-1 flex" ref={contentRef}>
-        {/* Side bar */}
-        <aside className="w-64 border-r border-[#2f3b54] bg-[#171c28]">
-          <div className="px-3 py-2 text-xs uppercase tracking-wide text-[#8695b7]">Explorer</div>
-          <ul className="px-2 pb-4 space-y-1">
-            {SECTIONS.map((s) => (
-              <li key={s.id}>
-                <button
-                  onClick={() => openSection(s)}
-                  className={
-                    'w-full text-left flex items-center gap-2 px-2 py-1 rounded ' +
-                    (leftActiveTabId === s.id || rightActiveTabId === s.id ? 'bg-[#2f3b54] text-[#d7dce2]' : 'hover:bg-[#1d2433] text-[#a2aabc]')
-                  }
-                >
-                  <FileIcon filePath={s.filePath} className="shrink-0" size={18} />
-                  <span className={(leftActiveTabId === s.id || rightActiveTabId === s.id) ? 'text-[#d7dce2]' : 'text-[#a2aabc]'}>{s.filePath}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        {!sidebarCollapsed && (
+          <aside className="w-64 border-r border-[#2f3b54] bg-[#171c28]">
+            <div className="px-3 py-2 text-xs uppercase tracking-wide text-[#8695b7]">Explorer</div>
+            <ul className="px-2 pb-4 space-y-1">
+              {SECTIONS.map((s) => (
+                <li key={s.id}>
+                  <button
+                    onClick={() => openSection(s)}
+                    className={
+                      'w-full text-left flex items-center gap-2 px-2 py-1 rounded ' +
+                      (leftActiveTabId === s.id || rightActiveTabId === s.id ? 'bg-[#2f3b54] text-[#d7dce2]' : 'hover:bg-[#1d2433] text-[#a2aabc]')
+                    }
+                  >
+                    <FileIcon filePath={s.filePath} className="shrink-0" size={18} />
+                    <span className={leftActiveTabId === s.id || rightActiveTabId === s.id ? 'text-[#d7dce2]' : 'text-[#a2aabc]'}>{s.filePath}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )}
 
-        {/* Editor area: two groups (left, right if present) */}
         <div className="flex-1 flex overflow-hidden">
-          {/* Left group */}
           <div className="flex flex-col border-r border-[#2f3b54]" style={{ width: rightOpenTabs.length ? `${splitRatio * 100}%` : '100%' }}>
             <div className="h-9 border-b border-[#2f3b54] bg-[#171c28] flex items-stretch overflow-x-auto">
               {leftOpenTabs.map((tab, index) => {
-              const sec = SECTIONS.find((s) => s.id === tab.id);
-              return (
-                <div
-                  key={tab.id}
-                  className={
-                    'flex items-center gap-2 px-3 text-sm border-r border-[#2f3b54] select-none cursor-pointer ' +
-                    (leftActiveTabId === tab.id ? 'bg-[#1d2433] text-[#d7dce2] border-b-2 border-b-[#ffcc66]' : 'text-[#8695b7] hover:bg-[#1d2433]')
-                  }
-                  onClick={() => setLeftActiveTabId(tab.id)}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setContextMenu({ x: e.clientX, y: e.clientY, type: 'tab', tabId: tab.id, group: 'left' });
-                  }}
-                  draggable
-                  onDragStart={(e) => handleTabDragStart(index, e)}
-                  onDragOver={(e) => handleTabDragOver(index, e)}
-                  onDrop={(e) => handleTabDrop(index, e)}
-                  onDragEnd={handleTabDragEnd}
-                  role="button"
-                  data-tab-id={tab.id}
-                  style={dragOverIndex === index && dragIndex !== null && dragIndex !== index ? { boxShadow: 'inset -2px 0 0 #ffcc66' } : undefined}
-                >
-                  {sec ? <FileIcon filePath={sec.filePath} size={16} /> : null}
-                  <span>{tab.title}</span>
-                   <button
-                    onClick={(e) => {
+                const sec = SECTIONS.find((s) => s.id === tab.id);
+                return (
+                  <div
+                    key={tab.id}
+                    className={
+                      'flex items-center gap-2 px-3 text-sm border-r border-[#2f3b54] select-none cursor-pointer ' +
+                      (leftActiveTabId === tab.id ? 'bg-[#1d2433] text-[#d7dce2] border-b-2 border-b-[#ffcc66]' : 'text-[#8695b7] hover:bg-[#1d2433]')
+                    }
+                    onClick={() => setLeftActiveTabId(tab.id)}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
-                      closeTab(tab.id, 'left');
+                      setContextMenu({ x: e.clientX, y: e.clientY, type: 'tab', tabId: tab.id, group: 'left' });
                     }}
-                    className={leftActiveTabId === tab.id ? 'text-[#8695b7] hover:text-[#d7dce2]' : 'text-[#6679a4] hover:text-[#a2aabc]'}
-                    aria-label={`Close ${tab.title}`}
+                    draggable
+                    onDragStart={(e) => handleTabDragStart(index, e)}
+                    onDragOver={(e) => handleTabDragOver(index, e)}
+                    onDrop={(e) => handleTabDrop(index, e)}
+                    onDragEnd={handleTabDragEnd}
+                    role="button"
+                    data-tab-id={tab.id}
+                    style={dragOverIndex === index && dragIndex !== null && dragIndex !== index ? { boxShadow: 'inset -2px 0 0 #ffcc66' } : undefined}
                   >
-                    ×
-                   </button>
-                </div>
-              );
+                    {sec ? <FileIcon filePath={sec.filePath} size={16} /> : null}
+                    <span>{tab.title}</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        closeTab(tab.id, 'left');
+                      }}
+                      className={leftActiveTabId === tab.id ? 'text-[#8695b7] hover:text-[#d7dce2]' : 'text-[#6679a4] hover:text-[#a2aabc]'}
+                      aria-label={`Close ${tab.title}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
               })}
             </div>
             <div className="flex-1 min-w-0 bg-[#1d2433]">{leftActiveTabId ? renderEditorContent(leftActiveTabId) : null}</div>
           </div>
 
-          {/* Resizer */}
           {rightOpenTabs.length ? (
             <div
               onMouseDown={(e) => {
@@ -917,8 +943,10 @@ function App() {
             />
           ) : null}
 
-          {/* Right group */}
-          <div className="flex flex-col" style={{ width: rightOpenTabs.length ? `${(1 - splitRatio) * 100}%` : 0, display: rightOpenTabs.length ? 'flex' : 'none' }}>
+          <div
+            className="flex flex-col"
+            style={{ width: rightOpenTabs.length ? `${(1 - splitRatio) * 100}%` : 0, display: rightOpenTabs.length ? 'flex' : 'none' }}
+          >
             <div className="h-9 border-b border-[#2f3b54] bg-[#171c28] flex items-stretch overflow-x-auto">
               {rightOpenTabs.map((tab) => {
                 const sec = SECTIONS.find((s) => s.id === tab.id);
@@ -927,7 +955,9 @@ function App() {
                     key={tab.id}
                     className={
                       'flex items-center gap-2 px-3 text-sm border-r border-[#2f3b54] select-none cursor-pointer ' +
-                      (rightActiveTabId === tab.id ? 'bg-[#1d2433] text-[#d7dce2] border-b-2 border-b-[#ffcc66]' : 'text-[#8695b7] hover:bg-[#1d2433]')
+                      (rightActiveTabId === tab.id
+                        ? 'bg-[#1d2433] text-[#d7dce2] border-b-2 border-b-[#ffcc66]'
+                        : 'text-[#8695b7] hover:bg-[#1d2433]')
                     }
                     onClick={() => setRightActiveTabId(tab.id)}
                     onContextMenu={(e) => {
@@ -940,16 +970,16 @@ function App() {
                   >
                     {sec ? <FileIcon filePath={sec.filePath} size={16} /> : null}
                     <span>{tab.title}</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      closeTab(tab.id, 'right');
-                    }}
-                    className={rightActiveTabId === tab.id ? 'text-[#8695b7] hover:text-[#d7dce2]' : 'text-[#6679a4] hover:text-[#a2aabc]'}
-                    aria-label={`Close ${tab.title}`}
-                  >
-                    ×
-        </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        closeTab(tab.id, 'right');
+                      }}
+                      className={rightActiveTabId === tab.id ? 'text-[#8695b7] hover:text-[#d7dce2]' : 'text-[#6679a4] hover:text-[#a2aabc]'}
+                      aria-label={`Close ${tab.title}`}
+                    >
+                      ×
+                    </button>
                   </div>
                 );
               })}
@@ -959,15 +989,16 @@ function App() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="h-9 border-t border-[#2f3b54] bg-[#171c28] flex items-center justify-center text-[12px] text-[#8695b7] select-none">
         <span className="mr-1">Developed with</span>
         <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden className="mx-1">
-          <path d="M12.1 21.35l-1.1-.98C5.14 15.36 2 12.5 2 8.9 2 6.1 4.2 4 6.9 4c1.6 0 3.17.76 4.1 1.96C12.93 4.76 14.5 4 16.1 4 18.8 4 21 6.1 21 8.9c0 3.6-3.14 6.46-8.99 11.47l-1.91 1.68z" fill="#ef6b73"/>
+          <path
+            d="M12.1 21.35l-1.1-.98C5.14 15.36 2 12.5 2 8.9 2 6.1 4.2 4 6.9 4c1.6 0 3.17.76 4.1 1.96C12.93 4.76 14.5 4 16.1 4 18.8 4 21 6.1 21 8.9c0 3.6-3.14 6.46-8.99 11.47l-1.91 1.68z"
+            fill="#ef6b73"
+          />
         </svg>
         <span className="mr-1">by Lalit. Inspired by most used Code Editor.</span>
       </footer>
-      {/* Context Menu */}
       {contextMenu && contextMenu.type === 'tab' && (
         <TabContextMenu
           x={contextMenu.x}
